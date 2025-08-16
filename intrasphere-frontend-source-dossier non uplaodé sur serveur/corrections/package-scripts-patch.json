@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:php": "vite build && echo 'Build ready for PHP deployment'",
+    "preview": "vite preview",
+    "check": "tsc --noEmit",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  }
+}

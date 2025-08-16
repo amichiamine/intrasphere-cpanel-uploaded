@@ -1,0 +1,43 @@
+{
+    "name": "intrasphere/php-backend",
+    "description": "IntraSphere PHP Backend - Adaptateur pour hébergement mutualisé",
+    "version": "1.0.0",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "IntraSphere Team",
+            "email": "support@intrasphere.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.0",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-fileinfo": "*",
+        "ext-zip": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "IntraSphere\\Controllers\\": "api/Controllers/",
+            "IntraSphere\\Models\\": "api/Models/",
+            "IntraSphere\\Services\\": "api/Services/",
+            "IntraSphere\\Middleware\\": "api/Middleware/",
+            "IntraSphere\\Config\\": "api/Config/"
+        }
+    },
+    "scripts": {
+        "deploy": "php scripts/deploy.php",
+        "package": "php scripts/create_package.php",
+        "install": "php install.php"
+    },
+    "extra": {
+        "intrasphere": {
+            "version": "1.0.0",
+            "adapter": "php",
+            "compatible": "node.js backend"
+        }
+    }
+}

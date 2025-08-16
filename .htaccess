@@ -1,0 +1,24 @@
+# IntraSphere - Configuration principale
+Options +FollowSymLinks -MultiViews -Indexes
+RewriteEngine On
+RewriteBase /intrasphere/
+
+# CORS pour API
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
+
+# 1) API → Backend PHP (CRITIQUE)
+RewriteRule ^api/(.*)$ intrasphere-backend/public/index.php [L,QSA]
+
+# 2) Assets → Frontend assets
+RewriteRule ^assets/(.*)$ intrasphere-frontend/assets/$1 [L]
+
+# 3) Static files → Frontend static
+RewriteRule ^static/(.*)$ intrasphere-frontend/static/$1 [L]
+
+# 4) SPA Fallback → Frontend pour React Router
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/intrasphere/api/
+RewriteRule ^.*$ intrasphere-frontend/index.html [L]

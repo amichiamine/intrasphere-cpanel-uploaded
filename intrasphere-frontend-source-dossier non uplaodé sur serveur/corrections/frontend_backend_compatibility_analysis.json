@@ -1,0 +1,222 @@
+{
+  "frontend_analysis": {
+    "stack_technique": {
+      "bundler": "Vite (pas Create React App)",
+      "language": "TypeScript complet",
+      "framework": "React 18",
+      "routing": "Wouter (léger)",
+      "state_management": "TanStack Query + État personnalisé",
+      "ui_components": "Radix UI + Tailwind CSS",
+      "animations": "Framer Motion",
+      "database_orm": "Drizzle ORM (PostgreSQL)",
+      "websocket": "Client WebSocket intégré",
+      "api_client": "Enhanced API avec cache/offline"
+    },
+    "configuration": {
+      "vite_base": "/intrasphere/",
+      "build_output": "../intrasphere-frontend-build",
+      "homepage_package_json": "/intrasphere/",
+      "env_expected": "PostgreSQL + Node.js",
+      "websocket_url": "ws://host/ws"
+    },
+    "api_expectations": {
+      "base_url_config": "Non configurée dans enhanced-api.ts",
+      "response_format": "Structure PostgreSQL avec Drizzle",
+      "authentication": "JWT/Session avec userId",
+      "websocket_integration": "Messages temps réel attendus",
+      "offline_support": "Cache API intégré"
+    },
+    "database_schema": {
+      "type": "PostgreSQL",
+      "orm": "Drizzle",
+      "tables": [
+        "users",
+        "announcements",
+        "documents",
+        "events",
+        "messages",
+        "complaints",
+        "permissions",
+        "trainings",
+        "training_participants",
+        "contents",
+        "categories",
+        "courses",
+        "lessons",
+        "quizzes",
+        "forum_categories",
+        "forum_topics",
+        "forum_posts"
+      ],
+      "features_avancees": [
+        "E-learning complet",
+        "Forum",
+        "WebSocket"
+      ]
+    }
+  },
+  "backend_analysis": {
+    "stack_technique": {
+      "language": "PHP",
+      "database": "MySQL",
+      "routing": "Router PHP personnalisé",
+      "api_format": "JSON simple",
+      "no_websocket": true,
+      "simple_structure": true
+    },
+    "routes_api": [
+      "/api/health",
+      "/api/auth/me",
+      "/api/stats",
+      "/api/announcements",
+      "/api/users",
+      "/api/documents",
+      "/api/categories",
+      "/api/contents",
+      "/api/events",
+      "/api/messages",
+      "/api/complaints",
+      "/api/forum/*",
+      "/api/upload"
+    ],
+    "response_format": {
+      "success": "Response::success(data)",
+      "error": "Response::error(message, code)",
+      "structure": "Simple PHP arrays -> JSON"
+    }
+  },
+  "incompatibilites": {
+    "CRITIQUES": [
+      {
+        "probleme": "Database Schema Mismatch",
+        "frontend": "PostgreSQL avec Drizzle ORM, 20+ tables complexes",
+        "backend": "MySQL simple avec structure basique",
+        "impact": "Structures de données incompatibles",
+        "gravite": "MAJEURE"
+      },
+      {
+        "probleme": "API Base URL Non Configurée",
+        "frontend": "Enhanced API client sans baseUrl définie",
+        "backend": "URLs relatives /intrasphere/api/*",
+        "impact": "Appels API échouent",
+        "gravite": "CRITIQUE"
+      },
+      {
+        "probleme": "WebSocket Integration",
+        "frontend": "Client WebSocket intégré avec real-time",
+        "backend": "Pas de support WebSocket",
+        "impact": "Fonctionnalités temps réel non disponibles",
+        "gravite": "MOYENNE"
+      },
+      {
+        "probleme": "Build Configuration",
+        "frontend": "Vite config build vers ../intrasphere-frontend-build",
+        "backend": "Structure attendue dans intrasphere-frontend/",
+        "impact": "Build déployé au mauvais endroit",
+        "gravite": "CRITIQUE"
+      },
+      {
+        "probleme": "Response Format Mismatch",
+        "frontend": "Attend structure Drizzle/PostgreSQL",
+        "backend": "Retourne structure PHP simple",
+        "impact": "Parsing des réponses API échoue",
+        "gravite": "MAJEURE"
+      }
+    ],
+    "MOYENNES": [
+      {
+        "probleme": "E-Learning Features",
+        "frontend": "Système e-learning complet (courses, quizzes)",
+        "backend": "Trainings simples seulement",
+        "impact": "Fonctionnalités avancées non disponibles"
+      },
+      {
+        "probleme": "Forum Avancé",
+        "frontend": "Forum avec likes, modération, statistiques",
+        "backend": "Forum basique",
+        "impact": "Fonctionnalités forum limitées"
+      }
+    ]
+  },
+  "adaptations_requises": {
+    "PRIORITE_1_CRITIQUE": [
+      {
+        "action": "Configurer Enhanced API Base URL",
+        "fichier": "src/core/lib/enhanced-api.ts",
+        "modification": "Ajouter baseUrl: '/intrasphere/api' dans config",
+        "code_exemple": "this.config = { baseUrl: '/intrasphere/api', ...config }"
+      },
+      {
+        "action": "Corriger Vite Build Output",
+        "fichier": "vite.config.ts",
+        "modification": "Changer outDir vers le bon chemin",
+        "code_exemple": "outDir: path.resolve(__dirname, 'dist')"
+      },
+      {
+        "action": "Adapter .env.production",
+        "fichier": ".env.production",
+        "modification": "Configurer pour PHP/MySQL au lieu de Node/PostgreSQL",
+        "variables_requises": [
+          "REACT_APP_API_URL=/intrasphere/api",
+          "REACT_APP_WS_DISABLED=true",
+          "PUBLIC_URL=/intrasphere"
+        ]
+      }
+    ],
+    "PRIORITE_2_MAJEURE": [
+      {
+        "action": "Adapter les types de données",
+        "fichier": "shared/schema.ts",
+        "modification": "Créer des types compatibles avec backend PHP",
+        "note": "Peut rester PostgreSQL pour dev, adapter responses"
+      },
+      {
+        "action": "Gérer WebSocket gracefully",
+        "fichier": "src/core/lib/websocket-client.ts",
+        "modification": "Déjà géré avec VITE_DISABLE_WS=true",
+        "status": "OK"
+      }
+    ],
+    "PRIORITE_3_AMELIORATION": [
+      {
+        "action": "Simplifier Auth Flow",
+        "modification": "Adapter pour l'auth PHP simple"
+      },
+      {
+        "action": "Désactiver fonctionnalités avancées manquantes",
+        "modification": "Masquer e-learning avancé, forum stats, etc."
+      }
+    ]
+  },
+  "build_plan": {
+    "etapes": [
+      {
+        "etape": 1,
+        "titre": "Configuration API",
+        "actions": [
+          "Modifier enhanced-api.ts: baseUrl: '/intrasphere/api'",
+          "Créer .env.production avec bonnes variables",
+          "Tester connexion API"
+        ]
+      },
+      {
+        "etape": 2,
+        "titre": "Build Configuration",
+        "actions": [
+          "Corriger vite.config.ts outDir",
+          "npm run build",
+          "Vérifier output dans bon dossier"
+        ]
+      },
+      {
+        "etape": 3,
+        "titre": "Déploiement",
+        "actions": [
+          "Upload build vers /public_html/intrasphere/intrasphere-frontend/",
+          "Tester chargement page",
+          "Vérifier appels API"
+        ]
+      }
+    ]
+  }
+}

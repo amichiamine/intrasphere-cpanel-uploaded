@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>IntraSphere - Portail d Entreprise " </title>
+    <meta name="description" content="IntraSphere - Votre portail dentreprise moderne">
+    <link rel="stylesheet" href="./assets/index-CAmCCyH9.css">
+    <style>
+        .loading-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 50%, #e0e7ff 100%);
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+        }
+        .loading-card {
+            background: hsla(0, 0%, 100%, .8); backdrop-filter: blur(12px);
+            border: 1px solid hsla(0, 0%, 100%, .2); border-radius: 1rem;
+            padding: 3rem; text-align: center;
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.1);
+        }
+        .loading-title {
+            font-size: 2rem; font-weight: 700; margin-bottom: 1rem;
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .loading-spinner {
+            width: 40px; height: 40px; margin: 20px auto;
+            border: 3px solid rgba(139, 92, 246, 0.1);
+            border-top: 3px solid #8B5CF6; border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <div class="loading-container">
+        <div class="loading-card">
+            <h1 class="loading-title">IntraSphere</h1>
+            <p style="color: #6B7280; margin-bottom: 1rem;">Chargement de votre portail...</p>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+    <script src="./assets/index-DP1xPCxU.js"></script>
+</body>
+</html>
